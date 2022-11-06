@@ -33,3 +33,16 @@ exports.postUser = async (req, res, next) => {
   }
 }
 
+exports.getUserProducts = (req, res, next) => {
+  // users/products?id=123
+  try {
+    if(req.query.id){
+      const productId = r
+    }else{
+      
+    }
+  } catch (err) {
+    next(err)
+  }
+}
+
