@@ -1,6 +1,7 @@
 const mongoose = require('mongoose')
 const Schema = mongoose.Schema
 const validator = require('validator')
+const bcrypt = require('bcrypt')
 
 const userSchema = new Schema({
   name: {type: String, required: true, maxLength: [25,"max length of name should be 25 please"]},
@@ -15,7 +16,8 @@ const userSchema = new Schema({
     type:String, 
     required: [true,"password is required"],
     minLength:[8,"password should be alteast 8 characters"],
-    maxLength: [16, "password should be atmost 16 characters"]
+    maxLength: [16, "password should be atmost 16 characters"],
+    select: false
   },
   confirmPassword: {
     type:String, 
@@ -29,7 +31,11 @@ const userSchema = new Schema({
       message: 'password and confirm password should be same'
     }
   },
-  admin: { type: Boolean, default: false}
+  role: { 
+    type: String,
+    enum: ['user', 'admin'],
+    default: 'user'
+  }
 })
 
 userSchema.pre('save', async function (next) {
